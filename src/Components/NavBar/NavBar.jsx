@@ -31,7 +31,7 @@ export default function NavBar() {
           <IconButton
             color="inherit"
             sx={{ ml: 1 }}
-            onClick={() => {}}
+            onClick={() => { }}
           >
             {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
@@ -40,7 +40,7 @@ export default function NavBar() {
             {isAuthenticated ? (
               <Button
                 color="inherit"
-                onClick={() => {}}
+                onClick={() => { }}
               >
                 Login &nbsp; <AccountCircle />
               </Button>
@@ -50,7 +50,7 @@ export default function NavBar() {
                 component={Link}
                 to="/profile/:id"
                 className={classes.linkButton}
-                onClick={() => {}}
+                onClick={() => { }}
               >
                 {!isMobile && <>My Movies &nbsp;</>}
                 <Avatar

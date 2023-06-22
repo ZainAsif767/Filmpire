@@ -30,7 +30,7 @@ export default function Sidebar({ setMobileOpen }) {
         <img
           className={classes.image}
           src={theme.palette.mode === 'light' ? redLogo : blueLogo}
-          alt="Starflix Logo"
+          alt="Filmpire Logo"
         />
       </Link>
       <Divider />

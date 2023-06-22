@@ -6,6 +6,7 @@ import { useTheme } from '@mui/material/styles';
 
 import Sidebar from '../Sidebar/Sidebar';
 import useStyles from './styles';
+import Search from '../Search/Search';
 
 export default function NavBar() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -35,7 +36,7 @@ export default function NavBar() {
           >
             {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
-          {!isMobile && 'Search...'}
+          {!isMobile && <Search />}
           <div>
             {isAuthenticated ? (
               <Button
@@ -61,7 +62,7 @@ export default function NavBar() {
               </Button>
             )}
           </div>
-          {isMobile && 'Search...'}
+          {isMobile && <Search />}
         </Toolbar>
       </AppBar>
       <div>

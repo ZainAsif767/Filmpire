@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppBar, IconButton, Toolbar, Button, Drawer, Avatar, useMediaQuery } from '@mui/material';
 import { Menu, AccountCircle, Brightness4, Brightness7 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
@@ -7,13 +7,32 @@ import { useTheme } from '@mui/material/styles';
 import Sidebar from '../Sidebar/Sidebar';
 import useStyles from './styles';
 import Search from '../Search/Search';
+import { fetchToken, createSessionId, moviesApi } from '../../utils';
 
 export default function NavBar() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const classes = useStyles();
   const isMobile = useMediaQuery('(max-width-600px)');
   const theme = useTheme();
-  const isAuthenticated = true;
+  const isAuthenticated = false;
+
+  const token = localStorage.getItem('request_token');
+  const sessionIdFromLocalStorage = localStorage.getItem('session_id');
+
+  useEffect(() => {
+    const loginUser = async () => {
+      if (token) {
+        if (sessionIdFromLocalStorage) {
+          const { data: userData } = await moviesApi.get(`/account?session_id=${sessionIdFromLocalStorage}`);
+        } else {
+          const sessionId = await createSessionId();
+
+          const { data: userData } = await moviesApi.get(`/account?session_id=${sessionId}`);
+        }
+      }
+    };
+  }, [token]);
+
   return (
     <div>
       <AppBar position="fixed">
@@ -41,7 +60,7 @@ export default function NavBar() {
             {isAuthenticated ? (
               <Button
                 color="inherit"
-                onClick={() => { }}
+                onClick={fetchToken}
               >
                 Login &nbsp; <AccountCircle />
               </Button>

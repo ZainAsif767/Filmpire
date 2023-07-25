@@ -11,6 +11,7 @@ export default function Profile() {
   return (
     <div>
       Profile - {user.username}
+      <h1>1</h1>
     </div>
   );
 }

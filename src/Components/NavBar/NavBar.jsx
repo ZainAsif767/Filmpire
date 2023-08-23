@@ -19,6 +19,7 @@ export default function NavBar() {
   const theme = useTheme();
   const dispatch = useDispatch();
 
+  // eslint-disable-next-line no-console
   console.log(user);
   const token = localStorage.getItem('request_token');
   const sessionIdFromLocalStorage = localStorage.getItem('session_id');

@@ -44,6 +44,27 @@ export default function MovieInformation() {
         <Typography variant="h3" align="center" gutterBottom>
           {data?.title} {(data.release_date.split('-')[0])}
         </Typography>
+        <Typography variant="h5" align="center" gutterBottom>
+          {data?.tagLine}
+        </Typography>
+        <Grid item className={classes.containerSpaceAround}>
+          <Box display="flex" align="center">
+            <Rating readOnly value={data.vote_average / 2} />
+            <Typography variant="subtitle1" style={{ marginLeft: '10px' }} gutterBottom>
+              {data?.vote_average} / 10
+            </Typography>
+          </Box>
+          <Typography variant="h6" align="center" gutterBottom>
+            {data?.runtime}min {data?.spoken_languages.length > 0 ? `/ ${data?.spoken_languages[0]}` : ''}
+          </Typography>
+        </Grid>
+        <Grid item className={classes.genresContainer}>
+          {data?.genres?.map((genre, i) => (
+            <Link key={genre.name} className={classes.links} to="/" onClick={() => {}}>
+              
+            </Link>
+          )) }
+        </Grid>
       </Grid>
     </Grid>
   );

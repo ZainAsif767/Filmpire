@@ -8,8 +8,10 @@ import axios from 'axios';
 
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategry';
 import useStyles from './styles.js';
-import { useGetMovieQuery } from '../../services/TMDB';
+import { useGetMovieQuery, useGetRecommendationsQuery } from '../../services/TMDB';
 import genreIcons from '../../assets/genres';
+// eslint-disable-next-line import/no-cycle
+import { MovieList } from '..';
 
 export default function MovieInformation() {
   console.log('Movie Information');
@@ -17,6 +19,8 @@ export default function MovieInformation() {
   const { data, isFetching, error } = useGetMovieQuery();
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  const { data: recommendations, isFetching: isRecommendationsFetching } = useGetRecommendationsQuery({ list: '/recommendations', movie_id: id });
 
   const isMovieFavorited = true;
   const isMovieWatchlisted = true;
@@ -164,6 +168,14 @@ export default function MovieInformation() {
           </div>
         </Grid>
       </Grid>
+      <Box marginTop="4rem" width="100%">
+        <Typography variant="h3" gutterBottom align="center">
+          You might also like
+        </Typography>
+        {recommendations
+          ? <MovieList />
+          : <Box>Sorry, nothing was found.</Box>}
+      </Box>
     </Grid>
   );
 }

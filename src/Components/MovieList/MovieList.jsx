@@ -1,19 +1,20 @@
-/* eslint-disable no-console */
 import React from 'react';
 import { Grid } from '@mui/material';
 
 import useStyles from './styles';
 import Movie from '../Movie/Movie';
 
-export default function MovieList({ movies }) {
+function MovieList({ movies, numberOfMovies, excludeFirst }) {
   const classes = useStyles();
-  console.log('movies list');
+  const startFrom = excludeFirst ? 1 : 0;
 
   return (
     <Grid container className={classes.moviesContainer}>
-      {movies.results.map((movie, i) => (
+      {movies.results.slice(startFrom, numberOfMovies).map((movie, i) => (
         <Movie key={i} movie={movie} i={i} />
       ))}
     </Grid>
   );
 }
+
+export default MovieList;

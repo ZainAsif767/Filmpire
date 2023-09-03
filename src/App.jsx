@@ -13,7 +13,7 @@ export default function App() {
         <Routes>
           <Route exact path="/movies/:id" element={<MovieInformation />} />
           <Route exact path="/actors/:id" element={<Actors />} />
-          <Route exact path="/" element={<Movies />} />
+          <Route exact path={['/', '/approved']} element={<Movies />} />
           <Route exact path="/profile/:id" element={<Profile />} />
         </Routes>
       </main>

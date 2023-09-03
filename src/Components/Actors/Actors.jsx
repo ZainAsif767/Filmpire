@@ -7,13 +7,13 @@ import { ArrowBack } from '@mui/icons-material';
 import { useGetActorsDetailsQuery, useGetMoviesByActorIdQuery } from '../../services/TMDB';
 import useStyles from './styles';
 // eslint-disable-next-line import/no-cycle
-import { MovieList } from '..';
+import { MovieList, Pagination } from '..';
 
 export default function Actors() {
   const { id } = useParams();
   const history = useHistory();
   const classes = useStyles();
-  const page = 1;
+  const [page, setPage] = React.useState(1);
 
   const { data, isFetching, error } = useGetActorsDetailsQuery(id);
   const { data: movies } = useGetMoviesByActorIdQuery(id, page);
@@ -69,6 +69,7 @@ export default function Actors() {
       <Box margin="2rem 0">
         <Typography variant="h2" gutterBottom align="center">
           {movies && <MovieList movies={movies} numberOfMovies={12} />}
+          <Pagination currentPage={page} setPage={setPage} totalPages={movies?.total_pages} />
         </Typography>
       </Box>
     </>

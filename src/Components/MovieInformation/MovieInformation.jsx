@@ -12,9 +12,10 @@ import { useGetMovieQuery, useGetRecommendationsQuery } from '../../services/TMD
 import genreIcons from '../../assets/genres';
 // eslint-disable-next-line import/no-cycle
 import { MovieList } from '..';
+import { userSelector } from '../../features/auth';
 
 export default function MovieInformation() {
-  console.log('Movie Information');
+  const { user } = useSelector(userSelector);
   const { id } = useParams();
   const { data, isFetching, error } = useGetMovieQuery();
   const classes = useStyles();
@@ -23,15 +24,27 @@ export default function MovieInformation() {
 
   const { data: recommendations, isFetching: isRecommendationsFetching } = useGetRecommendationsQuery({ list: '/recommendations', movie_id: id });
 
-  const isMovieFavorited = true;
-  const isMovieWatchlisted = true;
+  const [isMovieFavorited, setIsMovieFavorited] = useState(false);
+  const [isMovieWatchlisted, setIsMovieWatchlisted] = useState(false);
 
-  const addToFavorites = () => {
+  const addToFavorites = async () => {
+    await axios.post(`https://api.themoviedb.org/3/account/${user.id}/favorite?api_key=${process.env.REACT_APP_TMDB_KEY}&session_id=${localStorage.getItem('session_id')}`, {
+      media_type: 'movie',
+      media_id: id,
+      favortie: !isMovieFavorited,
+    });
 
+    setIsMovieFavorited((prev) => !prev);
   };
 
-  const addToWatchlist = () => {
+  const addToWatchlist = async () => {
+    await axios.post(`https://api.themoviedb.org/3/account/${user.id}/watchlist?api_key=${process.env.REACT_APP_TMDB_KEY}&session_id=${localStorage.getItem('session_id')}`, {
+      media_type: 'movie',
+      media_id: id,
+      favortie: !isMovieWatchlisted,
+    });
 
+    setIsMovieWatchlisted((prev) => !prev);
   };
 
   if (isFetching) {
@@ -52,7 +65,7 @@ export default function MovieInformation() {
 
   return (
     <Grid container className={classes.containerSpaceAround}>
-      <Grid item sm={12} lg={4}>
+      <Grid item sm={12} lg={4} style={{ display: 'flex', marginBottom: '30px' }}>
         <img
           className={classes.poster}
           src={`https://image.tmdb.org/t/p/w500${data?.poster_path}`}
@@ -78,10 +91,7 @@ export default function MovieInformation() {
             </Typography>
           </Box>
           <Typography variant="h6" align="center" gutterBottom>
-            {data?.runtime}min{' '}
-            {data?.spoken_languages.length > 0
-              ? `/ ${data?.spoken_languages[0]}`
-              : ''}
+            {data?.runtime}min | Language: {data?.spoken_language[0].name}
           </Typography>
         </Grid>
         <Grid item className={classes.genresContainer}>

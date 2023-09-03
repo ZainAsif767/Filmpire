@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { AppBar, IconButton, Toolbar, Button, Drawer, Avatar, useMediaQuery } from '@mui/material';
 import { Menu, AccountCircle, Brightness4, Brightness7 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { ColorModeContext } from '../../utils/ToggleColorMode';
 import { setUser, userSelector } from '../../features/auth';
 import Sidebar from '../Sidebar/Sidebar';
 import useStyles from './styles';
@@ -19,8 +20,8 @@ export default function NavBar() {
   const theme = useTheme();
   const dispatch = useDispatch();
 
-  // eslint-disable-next-line no-console
-  console.log(user);
+  const colorMode = useContext(ColorModeContext);
+
   const token = localStorage.getItem('request_token');
   const sessionIdFromLocalStorage = localStorage.getItem('session_id');
 
@@ -61,7 +62,8 @@ export default function NavBar() {
           <IconButton
             color="inherit"
             sx={{ ml: 1 }}
-            onClick={() => { }}
+            // eslint-disable-next-line react/destructuring-assignment
+            onClick={colorMode.toggleColorMode}
           >
             {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
           </IconButton>

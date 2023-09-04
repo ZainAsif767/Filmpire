@@ -1,17 +1,17 @@
 /* eslint-disable no-console */
 import React from 'react';
 import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowBack } from '@mui/icons-material';
 
 import { useGetActorsDetailsQuery, useGetMoviesByActorIdQuery } from '../../services/TMDB';
 import useStyles from './styles';
 // eslint-disable-next-line import/no-cycle
-import { MovieList, Pagination } from '..';
+import { MovieList, Pagination } from '../index';
 
 export default function Actors() {
   const { id } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const classes = useStyles();
   const [page, setPage] = React.useState(1);
 
@@ -29,7 +29,7 @@ export default function Actors() {
   if (error) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center">
-        <Button startIcon={<ArrowBack />} onClick={() => history.goBack()} color="primary">
+        <Button startIcon={<ArrowBack />} onClick={() => navigate(-1)} color="primary">
           Go Back
         </Button>
       </Box>
@@ -60,7 +60,7 @@ export default function Actors() {
             <Button variant="contained" color="primary" target="_blank" href={`https://www.imdb.com/name/${data?.imdb_id}`}>
               IMDB
             </Button>
-            <Button startIcon={<ArrowBack />} onClick={() => history.goBack()} color="primary">
+            <Button startIcon={<ArrowBack />} onClick={() => navigate(-1)} color="primary">
               Back
             </Button>
           </Box>

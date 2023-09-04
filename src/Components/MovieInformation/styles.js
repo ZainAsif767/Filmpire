@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-unresolved
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from '@mui/material/styles';
 
 export default makeStyles((theme) => ({
   containerSpaceAround: {

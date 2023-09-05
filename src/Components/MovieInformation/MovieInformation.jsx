@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
-import { Modal, Typography, Button, ButtonGroup, Grid, Box, CircularProgress, useMediaQuery, Rating } from '@mui/material';
+import { Modal, Typography, Button, ButtonGroup, Grid, Box, CircularProgress, Rating } from '@mui/material';
 import { Movie as MovieIcon, Theaters, Language, PlusOne, Favorite, FavoriteBorderOutlined, Remove, ArrowBack } from '@mui/icons-material';
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,6 +24,7 @@ export default function MovieInformation() {
   const { data, isFetching, error } = useGetMovieQuery(id);
   const { data: favoriteMovies } = useGetListQuery({ listName: 'favortie/movies', accountId: user.id, sessionId: localStorage.getItem('session_id'), page: 1 });
   const { data: watchlistMovies } = useGetListQuery({ listName: 'watchlist/movies', accountId: user.id, sessionId: localStorage.getItem('session_id'), page: 1 });
+  // eslint-disable-next-line no-unused-vars
   const { data: recommendations, isFetching: isRecommendationsFetching } = useGetRecommendationsQuery({ list: '/recommendations', movie_id: id });
 
   const [isMovieFavorited, setIsMovieFavorited] = useState(false);
@@ -105,7 +106,7 @@ export default function MovieInformation() {
           </Typography>
         </Grid>
         <Grid item className={classes.genresContainer}>
-          {data?.genres?.map((genre, i) => (
+          {data?.genres?.map((genre) => (
             <Link
               key={genre.name}
               className={classes.links}
